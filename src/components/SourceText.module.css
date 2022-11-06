@@ -1,0 +1,59 @@
+.sourceText {
+  background: var(--gray-800);
+  border-radius: 8px;
+  padding: 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sourceTitle {
+  color: var(--gray--400);
+  text-decoration: none;
+
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+
+  transition: color 0.1s;
+}
+
+.sourceTitle:hover {
+  color: var(--white);
+}
+
+.sourceContainer {
+  border-top: 1px solid var(--gray-600);
+  padding-top: 1.5rem;
+}
+
+.sourceContainer form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sourceContainer form textarea {
+  border: 0;
+  border-radius: 8px;
+  background: var(--gray-900);
+  resize: none;
+  padding: 1rem;
+  color: var(--gray-100);
+  line-height: 1.4;
+}
+
+.sourceContainer form button {
+  border: 0;
+  border-radius: 8px;
+  background: var(--green-500);
+  color: var(--white);
+  font-weight: bold;
+  padding: 1rem 1.5rem;
+
+  transition: background-color 0.1s;
+}
+.sourceContainer form button:hover {
+  background: var(--green-300);
+}

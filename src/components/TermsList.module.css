@@ -1,0 +1,79 @@
+.termsList {
+  background: var(--gray-800);
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.termsList > strong {
+  margin: 1.5rem 0 0 1.5rem;
+}
+
+.termsContainer {
+  border-top: 1px solid var(--gray-600);
+  padding: 1.5rem;
+}
+
+.termsContainer form {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.termsContainer form input {
+  width: 100%;
+  background: var(--gray-900);
+  border: 0;
+  border-radius: 8px;
+  padding: 0.875rem;
+  color: var(--gray-100);
+  line-height: 1.4;
+}
+
+.termsContainer form button {
+  border: 0;
+  border-radius: 8px;
+  background: var(--green-500);
+  color: var(--white);
+  font-weight: bold;
+  padding: 0 1rem;
+
+  transition: background-color 0.1s;
+}
+
+.termsContainer form button:hover {
+  background: var(--green-300);
+}
+
+.termsView {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  padding: 1.5rem 0;
+}
+
+.term {
+  padding: 0.725rem;
+  border: 1px solid var(--green-500);
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.875rem;
+}
+
+.term a {
+  font-weight: bold;
+  color: var(--gray-400);
+  text-decoration: none;
+
+  transition: color 0.1s;
+}
+
+.term a:hover {
+  color: var(--red-500);
+}

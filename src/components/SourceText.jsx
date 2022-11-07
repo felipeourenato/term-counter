@@ -3,7 +3,7 @@ import styles from './SourceText.module.css';
 import { SourceTextTitle } from './SourceTextTitle';
 
 export function SourceText({ onStart }) {
-  const [textTitle, setTextTitle] = useState('Text 1');
+  const [textTitle, setTextTitle] = useState('');
   const [sourceText, setSourceText] = useState();
 
   function handleSourceTextChange(e) {

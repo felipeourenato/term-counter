@@ -3,8 +3,10 @@ import { PencilLine } from 'phosphor-react';
 
 import styles from './SourceTextTitle.module.css';
 
+const DEFAULT_TITLE = 'Text 1';
+
 export function SourceTextTitle({ value, onChange }) {
-  const [title, setTitle] = useState(value);
+  const [title, setTitle] = useState(value || DEFAULT_TITLE);
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
 
@@ -13,8 +15,9 @@ export function SourceTextTitle({ value, onChange }) {
   }
 
   function handleSubmitTextTitle() {
-    !title && setTitle(value);
-    onChange(title);
+    const newTitle = title || DEFAULT_TITLE;
+    setTitle(newTitle);
+    onChange(newTitle);
     setIsEditingTitle(false);
   }
 

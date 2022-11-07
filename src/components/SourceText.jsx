@@ -1,19 +1,32 @@
-import { PencilLine } from 'phosphor-react';
+import { useState } from 'react';
 import styles from './SourceText.module.css';
+import { SourceTextTitle } from './SourceTextTitle';
 
-export function SourceText() {
+export function SourceText({ onStart }) {
+  const [textTitle, setTextTitle] = useState('Text 1');
+  const [sourceText, setSourceText] = useState();
+
+  function handleSourceTextChange(e) {
+    setSourceText(e.target.value);
+  }
+
+  function handleStartClick() {
+    onStart({ textTitle, sourceText });
+  }
+
   return (
     <div className={styles.sourceText}>
-      <a className={styles.sourceTitle} href="">
-        <PencilLine size={20} />
-        <strong>Text 1</strong>
-      </a>
+      <SourceTextTitle value={textTitle} onChange={setTextTitle} />
 
       <div className={styles.sourceContainer}>
         <form>
-          <textarea placeholder="Adicione o texto fonte" />
+          <textarea
+            value={sourceText}
+            onChange={handleSourceTextChange}
+            placeholder="Adicione o texto fonte"
+          />
 
-          <button>Buscar termos</button>
+          <button onClick={handleStartClick}>Buscar termos</button>
         </form>
       </div>
     </div>

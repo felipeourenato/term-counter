@@ -17,7 +17,7 @@ export function TermsList() {
     e.preventDefault();
     if (!inputValue) return;
 
-    if (terms?.map((t) => t.toLowerCase).includes(inputValue.toLowerCase)) {
+    if (terms?.map((t) => t.toLowerCase()).includes(inputValue.toLowerCase())) {
       alert('Termo já adicionado à lista');
       return;
     }

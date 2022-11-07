@@ -8,21 +8,6 @@
   gap: 1.5rem;
 }
 
-.sourceTitle {
-  color: var(--gray--400);
-  text-decoration: none;
-
-  display: flex;
-  gap: 1rem;
-  align-items: flex-end;
-
-  transition: color 0.1s;
-}
-
-.sourceTitle:hover {
-  color: var(--white);
-}
-
 .sourceContainer {
   border-top: 1px solid var(--gray-600);
   padding-top: 1.5rem;

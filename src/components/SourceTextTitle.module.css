@@ -1,0 +1,32 @@
+.sourceTextTitle {
+}
+
+.sourceTextTitle input {
+  width: 100%;
+  background: var(--gray-900);
+  border: 0;
+  border-radius: 8px;
+  padding: 0.875rem;
+  color: var(--gray-100);
+  line-height: 1.4;
+}
+
+.sourceTextTitle input:focus {
+  box-shadow: none;
+}
+
+.sourceTextTitle a {
+  color: var(--gray--400);
+  text-decoration: none;
+  cursor: pointer;
+
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+
+  transition: color 0.1s;
+}
+
+.sourceTextTitle a:hover {
+  color: var(--white);
+}

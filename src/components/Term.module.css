@@ -1,0 +1,22 @@
+.term {
+  padding: 0.725rem;
+  border: 1px solid var(--green-500);
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.875rem;
+}
+
+.term a {
+  font-weight: bold;
+  color: var(--gray-400);
+  text-decoration: none;
+
+  transition: color 0.1s;
+}
+
+.term a:hover {
+  color: var(--red-500);
+}

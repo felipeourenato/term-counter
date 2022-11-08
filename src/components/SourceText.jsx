@@ -1,22 +1,33 @@
 import { useState } from 'react';
-import styles from './SourceText.module.css';
+
+import { DEFAULT_TEXT } from '../constants';
 import { SourceTextTitle } from './SourceTextTitle';
 
-export function SourceText({ onStart }) {
-  const [textTitle, setTextTitle] = useState('');
-  const [sourceText, setSourceText] = useState();
+import styles from './SourceText.module.css';
+
+export function SourceText({ initialSourceText, onChange, onStart }) {
+  const { title: initialTitle, text: initialText } = initialSourceText;
+  const [textTitle, setTextTitle] = useState(initialTitle);
+  const [sourceText, setSourceText] = useState(initialText);
 
   function handleSourceTextChange(e) {
     setSourceText(e.target.value);
+    onChange({ title: textTitle, text: e.target.value });
   }
 
-  function handleStartClick() {
+  function handleStartClick(e) {
+    e.preventDefault();
     onStart({ textTitle, sourceText });
+  }
+
+  function handleChangeTitle(t) {
+    setTextTitle(t);
+    onChange({ title: t, text: sourceText });
   }
 
   return (
     <div className={styles.sourceText}>
-      <SourceTextTitle value={textTitle} onChange={setTextTitle} />
+      <SourceTextTitle value={textTitle} onChange={handleChangeTitle} />
 
       <div className={styles.sourceContainer}>
         <form>

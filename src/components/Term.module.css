@@ -1,4 +1,5 @@
 .term {
+  height: 48px;
   padding: 0.725rem;
   border: 1px solid var(--green-500);
   border-radius: 8px;

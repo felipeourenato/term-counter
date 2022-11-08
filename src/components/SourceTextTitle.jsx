@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { PencilLine } from 'phosphor-react';
 
-import styles from './SourceTextTitle.module.css';
+import { DEFAULT_TITLE } from '../constants';
 
-const DEFAULT_TITLE = 'Text 1';
+import styles from './SourceTextTitle.module.css';
 
 export function SourceTextTitle({ value, onChange }) {
   const [title, setTitle] = useState(value || DEFAULT_TITLE);

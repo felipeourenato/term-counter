@@ -5,8 +5,8 @@ import { Term } from './Term';
 
 import styles from './TermsList.module.css';
 
-export function TermsList() {
-  const [terms, setTerms] = useState([]);
+export function TermsList({ initialTerms, onChange }) {
+  const [terms, setTerms] = useState(initialTerms);
   const [inputValue, setInputValue] = useState('');
 
   function handleInputChange(e) {
@@ -22,12 +22,16 @@ export function TermsList() {
       return;
     }
 
-    setTerms([...terms, inputValue]);
+    const newTerms = [...terms, inputValue];
+    setTerms(newTerms);
+    onChange(newTerms);
     setInputValue('');
   }
 
   function handleOnExclude(term) {
-    setTerms(terms.filter((t) => t !== term));
+    const newTerms = terms.filter((t) => t !== term);
+    setTerms(newTerms);
+    onChange(newTerms);
   }
 
   return (

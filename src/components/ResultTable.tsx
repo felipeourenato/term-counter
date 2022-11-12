@@ -1,4 +1,4 @@
-import styles from './ResultTable.module.css';
+import styles from "./ResultTable.module.css";
 
 export function ResultTable() {
   return (

@@ -2,7 +2,12 @@ import { Trash } from 'phosphor-react';
 
 import styles from './Term.module.css';
 
-export function Term({ term, onExclude }) {
+interface TermProps {
+  term: string;
+  onExclude: (v: string) => void;
+}
+
+export function Term({ term, onExclude }: TermProps) {
   function handleOnExclude() {
     onExclude(term);
   }

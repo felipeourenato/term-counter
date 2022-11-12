@@ -16,7 +16,9 @@ export function App() {
     text: DEFAULT_TEXT,
   });
 
-  function handleOnStart() {}
+  function handleOnStart() {
+    console.log({ sourceText });
+  }
 
   return (
     <div>

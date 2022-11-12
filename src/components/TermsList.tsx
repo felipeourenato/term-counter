@@ -1,19 +1,24 @@
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { Plus } from 'phosphor-react';
 
 import { Term } from './Term';
 
 import styles from './TermsList.module.css';
 
-export function TermsList({ initialTerms, onChange }) {
+interface TermsListProps {
+  initialTerms: string[];
+  onChange: (l: string[]) => void;
+}
+
+export function TermsList({ initialTerms, onChange }: TermsListProps) {
   const [terms, setTerms] = useState(initialTerms);
   const [inputValue, setInputValue] = useState('');
 
-  function handleInputChange(e) {
+  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value);
   }
 
-  function handleTermSubmit(e) {
+  function handleTermSubmit(e: FormEvent) {
     e.preventDefault();
     if (!inputValue) return;
 
@@ -28,7 +33,7 @@ export function TermsList({ initialTerms, onChange }) {
     setInputValue('');
   }
 
-  function handleOnExclude(term) {
+  function handleOnExclude(term: string) {
     const newTerms = terms.filter((t) => t !== term);
     setTerms(newTerms);
     onChange(newTerms);
@@ -39,7 +44,7 @@ export function TermsList({ initialTerms, onChange }) {
       <strong>Terms List</strong>
 
       <div className={styles.termsContainer}>
-        <form type="submit" onSubmit={handleTermSubmit}>
+        <form onSubmit={handleTermSubmit}>
           <input
             value={inputValue}
             onChange={handleInputChange}
@@ -52,7 +57,7 @@ export function TermsList({ initialTerms, onChange }) {
         </form>
         <div className={styles.termsView}>
           {terms?.map((t) => (
-            <Term term={t} onExclude={handleOnExclude} />
+            <Term key={t} term={t} onExclude={handleOnExclude} />
           ))}
         </div>
       </div>

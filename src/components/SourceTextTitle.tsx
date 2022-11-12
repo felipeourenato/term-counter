@@ -1,16 +1,21 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { PencilLine } from 'phosphor-react';
 
 import { DEFAULT_TITLE } from '../constants';
 
 import styles from './SourceTextTitle.module.css';
 
-export function SourceTextTitle({ value, onChange }) {
+interface SourceTextTitleProps {
+  value: string;
+  onChange: (v: string) => void;
+}
+
+export function SourceTextTitle({ value, onChange }: SourceTextTitleProps) {
   const [title, setTitle] = useState(value || DEFAULT_TITLE);
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
 
-  function handleOnChangeTextTitle(e) {
+  function handleOnChangeTextTitle(e: ChangeEvent<HTMLInputElement>) {
     setTitle(e.target.value);
   }
 

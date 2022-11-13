@@ -8,6 +8,7 @@ import styles from './App.module.css';
 
 import './global.css';
 import { useState } from 'react';
+import { start } from './logic';
 
 export function App() {
   const [terms, setTerms] = useState(DEFAULT_TERMS);
@@ -17,7 +18,8 @@ export function App() {
   });
 
   function handleOnStart() {
-    console.log({ sourceText });
+    const { result } = start(sourceText.text);
+    console.log({ result });
   }
 
   return (

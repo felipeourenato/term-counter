@@ -46,6 +46,8 @@ export function start(text: string) {
     ['dui', { value: 'dui', len: 3, results: [] }],
   ]);
 
+  const TEXTBLOCK: string[] = [];
+
   const paragraphs = text.split('\n');
 
   paragraphs
@@ -54,17 +56,20 @@ export function start(text: string) {
       const phrases = paragraph.split('.');
 
       if (!hasAtLeatOneSearchedTerm(paragraph, TERMS)) {
+        TEXTBLOCK.push(paragraph);
         return;
       }
 
       phrases
         .filter((phra) => !!phra)
         .forEach((phrase, phIdx) => {
-          const words = phrase.split(' ');
-
           if (!hasAtLeatOneSearchedTerm(phrase, TERMS)) {
+            TEXTBLOCK.push(phrase);
             return;
           }
+
+          const words = phrase.split(' ');
+          let newPhrase = phrase;
 
           const foundWords = words.filter((w) =>
             TERMS.has(w.toLocaleLowerCase())
@@ -86,11 +91,18 @@ export function start(text: string) {
                 },
               ],
             });
+            console.log({ fw });
+
+            newPhrase = newPhrase.replace(fw, `{{${paIdx}-${phIdx}-${id}}}`);
+            TEXTBLOCK.push(newPhrase);
           });
         });
     });
 
+  console.log(TEXTBLOCK.join());
+
   return {
     result: TERMS,
+    template: TEXTBLOCK,
   };
 }

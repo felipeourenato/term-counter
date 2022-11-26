@@ -12,13 +12,15 @@ import { start } from './logic';
 
 export function App() {
   const [terms, setTerms] = useState(DEFAULT_TERMS);
+  const [templ, setTempl] = useState<string[]>([]);
   const [sourceText, setSourceText] = useState({
     title: DEFAULT_TITLE,
     text: DEFAULT_TEXT,
   });
 
   function handleOnStart() {
-    const { result } = start(sourceText.text);
+    const { result, template } = start(sourceText.text);
+    setTempl(template);
     console.log({ result });
   }
 
@@ -35,7 +37,7 @@ export function App() {
             onStart={handleOnStart}
           />
         </div>
-        <ResultTable />
+        <ResultTable template={templ} />
       </div>
     </div>
   );

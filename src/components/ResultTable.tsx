@@ -1,30 +1,27 @@
-import styles from "./ResultTable.module.css";
+import { TEMPLATE_REGEX } from '../constants';
+import styles from './ResultTable.module.css';
 
-export function ResultTable() {
+export function ResultTable({ template }: { template: string[] }) {
   return (
     <div className={styles.wrapper}>
-      <strong>Text 1</strong>
+      {template.map((tpl) => {
+        const matches = [...tpl.matchAll(TEMPLATE_REGEX)];
+        if (matches) {
+          let arr = [];
 
-      <div className={styles.resultTable}>
-        <div className={styles.tableHeader}>
-          <div className={styles.headerItem}>Term</div>
-          <div className={styles.headerItem}>Quantity</div>
-        </div>
-        <div className={styles.tableRows}>
-          <div className={styles.tableRow}>
-            <div className={styles.rowItem}>a</div>
-            <div className={styles.rowItem}>1</div>
-          </div>
-          <div className={styles.tableRow}>
-            <div className={styles.rowItem}>b</div>
-            <div className={styles.rowItem}>3</div>
-          </div>
-          <div className={styles.tableRow}>
-            <div className={styles.rowItem}>c</div>
-            <div className={styles.rowItem}>15</div>
-          </div>
-        </div>
-      </div>
+          matches.forEach((mat) => {
+            const [um, dois, tres] = mat;
+            const { input, index } = mat;
+            console.log({ um, dois, tres, input, index });
+            const prefix = input!.substring(0, index!);
+            const sufix = input!.substring(index! + um.length);
+            arr = [...arr, prefix, <text>{um}</text>, sufix];
+          });
+
+          return <>{arr.map((item) => item)}</>;
+        }
+        return tpl;
+      })}
     </div>
   );
 }

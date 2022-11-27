@@ -9,6 +9,7 @@ import styles from './App.module.css';
 import './global.css';
 import { useState } from 'react';
 import { start } from './logic';
+import { TermContextProvider } from './context';
 
 export function App() {
   const [terms, setTerms] = useState(DEFAULT_TERMS);
@@ -30,19 +31,21 @@ export function App() {
     <div>
       <Header />
 
-      <div className={styles.wrapper}>
-        <div className={styles.forms}>
-          <TermsList initialTerms={terms} onChange={setTerms} />
-          <SourceText
-            initialSourceText={sourceText}
-            onChange={setSourceText}
-            onStart={handleOnStart}
-            resultTemplate={templ}
-            templateMap={templMap}
-          />
+      <TermContextProvider>
+        <div className={styles.wrapper}>
+          <div className={styles.forms}>
+            <TermsList initialTerms={terms} onChange={setTerms} />
+            <SourceText
+              initialSourceText={sourceText}
+              onChange={setSourceText}
+              onStart={handleOnStart}
+              resultTemplate={templ}
+              templateMap={templMap!}
+            />
+          </div>
+          {/* <ResultTable template={templ} /> */}
         </div>
-        {/* <ResultTable template={templ} /> */}
-      </div>
+      </TermContextProvider>
     </div>
   );
 }

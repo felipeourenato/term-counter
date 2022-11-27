@@ -1,38 +1,43 @@
+import Markdown from 'markdown-to-jsx';
 import { TEMPLATE_REGEX } from '../constants';
 import styles from './ResultTable.module.css';
+
+function SelectedTermRender({ value }: { value: string }) {
+  return <strong>{value}</strong>;
+}
 
 export function ResultTable({
   template,
   templateMap,
+  selecteds = [],
 }: {
   template: string[];
   templateMap: Map<string, string>;
+  selecteds: string[];
 }) {
+  let textValue = template.join('\n');
+  const matches = [...textValue.matchAll(TEMPLATE_REGEX)];
+  matches.forEach((match) => {
+    const [key] = match;
+    if (!selecteds.includes(key)) {
+      textValue = textValue.replace(key, templateMap.get(key)!);
+      return;
+    }
+    textValue = textValue.replace(
+      key,
+      `<SelectedTermRender value="${templateMap.get(key)}" />`
+    );
+  });
+
   return (
-    <div className={styles.wrapper}>
-      {template.map((tpl) => {
-        const matches = [...tpl.matchAll(TEMPLATE_REGEX)];
-        if (!!matches.length) {
-          let arr = [];
-
-          matches.forEach((mat) => {
-            const [um, dois, tres] = mat;
-            const { input, index } = mat;
-            console.log({ um, dois, tres, input, index });
-            const prefix = input!.substring(0, index!);
-            const sufix = input!.substring(index! + um.length);
-            arr = [
-              ...arr,
-              <text>{prefix}</text>,
-              <text className={styles.foundTerm}>{templateMap.get(um)}</text>,
-              <text>{sufix}</text>,
-            ];
-          });
-
-          return <>{arr.map((item) => item)}</>;
-        }
-        return <text>{tpl}</text>;
-      })}
-    </div>
+    <Markdown
+      options={{
+        overrides: {
+          SelectedTermRender,
+        },
+      }}
+    >
+      {textValue}
+    </Markdown>
   );
 }

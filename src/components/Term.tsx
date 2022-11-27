@@ -13,11 +13,13 @@ export function Term({ term, onExclude }: TermProps) {
   }
   return (
     <div className={styles.term}>
-      {term}
-
       <a onClick={handleOnExclude}>
         <Trash size={24} />
       </a>
+
+      {term}
+
+      <text>0</text>
     </div>
   );
 }

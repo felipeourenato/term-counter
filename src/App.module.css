@@ -1,7 +1,6 @@
 .wrapper {
-  max-width: 70rem;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  /* max-width: 50rem; */
+  margin: 0.5rem 0 0 0;
 
   display: flex;
   flex-direction: column;
@@ -9,9 +8,8 @@
 }
 
 .forms {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  display: flex;
+  gap: 1rem;
   align-items: flex-start;
 }
 

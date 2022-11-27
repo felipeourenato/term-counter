@@ -13,14 +13,16 @@ import { start } from './logic';
 export function App() {
   const [terms, setTerms] = useState(DEFAULT_TERMS);
   const [templ, setTempl] = useState<string[]>([]);
+  const [templMap, setTemplMap] = useState<Map<string, string>>();
   const [sourceText, setSourceText] = useState({
     title: DEFAULT_TITLE,
     text: DEFAULT_TEXT,
   });
 
   function handleOnStart() {
-    const { result, template } = start(sourceText.text);
+    const { result, template, templateMap } = start(sourceText.text);
     setTempl(template);
+    setTemplMap(templateMap);
     console.log({ result });
   }
 
@@ -35,9 +37,11 @@ export function App() {
             initialSourceText={sourceText}
             onChange={setSourceText}
             onStart={handleOnStart}
+            resultTemplate={templ}
+            templateMap={templMap}
           />
         </div>
-        <ResultTable template={templ} />
+        {/* <ResultTable template={templ} /> */}
       </div>
     </div>
   );

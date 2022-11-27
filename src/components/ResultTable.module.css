@@ -4,8 +4,17 @@
   padding: 1.5rem;
 
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  /* flex-direction: column; */
+  /* gap: 1.5rem; */
+}
+
+.wrapper text {
+  display: flex;
+}
+
+.foundTerm {
+  background-color: red;
 }
 
 .resultTable {

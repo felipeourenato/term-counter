@@ -26,12 +26,6 @@ type TermData = {
 
 type TermMap = Map<string, TermData>;
 
-const TERMS = new Map<string, TermData>([
-  ['lorem', { value: 'Lorem', len: 5, results: [] }],
-  ['amet', { value: 'amet', len: 4, results: [] }],
-  ['dui', { value: 'dui', len: 3, results: [] }],
-]);
-
 function hasAtLeatOneSearchedTerm(text: string, terms: TermMap): boolean {
   const textWithoutSpecials = text.replace(/[^a-zA-Z0-9 ]/g, '');
   const words = textWithoutSpecials.split(' ');
@@ -45,6 +39,8 @@ export function start(text: string) {
     ['amet', { value: 'amet', len: 4, results: [] }],
     ['dui', { value: 'dui', len: 3, results: [] }],
   ]);
+
+  const TEMPLATE_MAP = new Map<string, string>();
 
   const TEXTBLOCK: string[] = [];
 
@@ -94,6 +90,7 @@ export function start(text: string) {
             console.log({ fw });
 
             newPhrase = newPhrase.replace(fw, `{{${paIdx}-${phIdx}-${id}}}`);
+            TEMPLATE_MAP.set(`{{${paIdx}-${phIdx}-${id}}}`, fw);
             TEXTBLOCK.push(newPhrase);
           });
         });
@@ -104,5 +101,6 @@ export function start(text: string) {
   return {
     result: TERMS,
     template: TEXTBLOCK,
+    templateMap: TEMPLATE_MAP,
   };
 }

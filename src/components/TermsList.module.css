@@ -1,7 +1,7 @@
 .termsList {
-  height: 500px;
+  height: calc(100vh - 60px);
+  width: 300px;
   background: var(--gray-800);
-  border-radius: 8px;
   padding: 1.5rem;
 
   display: flex;
@@ -14,7 +14,6 @@
 }
 
 .termsContainer {
-  height: 100%;
   border-top: 1px solid var(--gray-600);
   padding-top: 1.5rem;
 
@@ -57,9 +56,9 @@
   background: var(--green-300);
 }
 
-.termsView {
+/* .termsView {
   display: flex;
   flex-wrap: wrap;
   gap: 0.875rem;
   overflow-y: auto;
-}
+} */

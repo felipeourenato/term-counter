@@ -1,17 +1,14 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { Plus } from 'phosphor-react';
 
 import { Term } from './Term';
 
 import styles from './TermsList.module.css';
+import { TermContext } from '../context';
 
-interface TermsListProps {
-  initialTerms: string[];
-  onChange: (l: string[]) => void;
-}
-
-export function TermsList({ initialTerms, onChange }: TermsListProps) {
-  const [terms, setTerms] = useState(initialTerms);
+export function TermsList() {
+  const { terms, addTerm, excludeTerm, highlightTerm, foundTermsMap } =
+    useContext(TermContext);
   const [inputValue, setInputValue] = useState('');
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -27,22 +24,39 @@ export function TermsList({ initialTerms, onChange }: TermsListProps) {
       return;
     }
 
-    const newTerms = [...terms, inputValue];
-    setTerms(newTerms);
-    onChange(newTerms);
+    addTerm(inputValue);
     setInputValue('');
   }
 
   function handleOnExclude(term: string) {
-    const newTerms = terms.filter((t) => t !== term);
-    setTerms(newTerms);
-    onChange(newTerms);
+    excludeTerm(term);
+  }
+
+  function handleTermClick(term: string) {
+    highlightTerm(term);
+  }
+
+  function renderTerms() {
+    if (!foundTermsMap) return;
+    const foundTerms = [...foundTermsMap.keys()];
+
+    return (
+      <>
+        {foundTerms.map((ft) => (
+          <Term
+            key={ft}
+            term={ft}
+            quantity={foundTermsMap.get(ft)!.length}
+            onClick={handleTermClick}
+            onExclude={handleOnExclude}
+          />
+        ))}
+      </>
+    );
   }
 
   return (
     <div className={styles.termsList}>
-      <strong>Terms List</strong>
-
       <div className={styles.termsContainer}>
         <form onSubmit={handleTermSubmit}>
           <input
@@ -55,11 +69,7 @@ export function TermsList({ initialTerms, onChange }: TermsListProps) {
             <Plus size={20} weight="bold" />
           </button>
         </form>
-        <div className={styles.termsView}>
-          {terms?.map((t) => (
-            <Term key={t} term={t} onExclude={handleOnExclude} />
-          ))}
-        </div>
+        <div className={styles.termsView}>{renderTerms()}</div>
       </div>
     </div>
   );

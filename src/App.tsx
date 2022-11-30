@@ -20,13 +20,6 @@ export function App() {
     text: DEFAULT_TEXT,
   });
 
-  function handleOnStart() {
-    const { result, template, templateMap } = start(sourceText.text);
-    setTempl(template);
-    setTemplMap(templateMap);
-    console.log({ result });
-  }
-
   return (
     <div>
       <Header />
@@ -34,16 +27,9 @@ export function App() {
       <TermContextProvider>
         <div className={styles.wrapper}>
           <div className={styles.forms}>
-            <TermsList initialTerms={terms} onChange={setTerms} />
-            <SourceText
-              initialSourceText={sourceText}
-              onChange={setSourceText}
-              onStart={handleOnStart}
-              resultTemplate={templ}
-              templateMap={templMap!}
-            />
+            <TermsList />
+            <SourceText />
           </div>
-          {/* <ResultTable template={templ} /> */}
         </div>
       </TermContextProvider>
     </div>

@@ -1,66 +1,53 @@
-/**
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse bibendum dui in libero elementum, venenatis pretium quam aliquet. Cras ut semper dui. Maecenas scelerisque auctor nibh. In vel mollis odio, vitae lobortis nibh. Nunc vulputate felis quis tincidunt sollicitudin. Aenean lobortis pharetra sodales. Sed consequat lacinia lectus. Praesent sit amet leo augue. Proin vulputate mauris id lacinia pretium. Aenean vitae lectus vitae libero varius blandit. 
-
-"Lorem", "ipsum dolor sit", "amet", ", consectetur adipiscing elit. Suspendisse bibendum","dui","in libero elementum, venenatis pretium quam aliquet. Cras ut semper","dui",". Maecenas scelerisque auctor nibh. In vel mollis odio, vitae lobortis nibh. Nunc vulputate felis quis tincidunt sollicitudin. Aenean lobortis pharetra sodales. Sed consequat lacinia lectus. Praesent sit","amet"," leo augue. Proin vulputate mauris id lacinia pretium. Aenean vitae lectus vitae libero varius blandit."
-
-"lorem": {"Lorem", 5, [{"Lorem", 0}]}
-
-string: "Lorem impsum dolor sit amet"
-
-string.algumaPalavraDaMatch ? busca a palavra e posição e adiciona no map
-*/
-
-type TermResult = {
+export type TermResult = {
   value: string;
-  paragraphIndex: number;
-  phraseIndex: number;
-  posInPhrase: number;
+  id: string;
 };
 
-type TermData = {
-  value: string;
-  len: number;
-  results: TermResult[];
-};
+export type TermMap = Map<string, TermResult[]>;
 
-type TermMap = Map<string, TermData>;
+export type CountingTermsResult = {
+  foundTermsMap: TermMap;
+  template: string;
+  templateDictionary: Map<string, string>;
+};
 
 function hasAtLeatOneSearchedTerm(text: string, terms: TermMap): boolean {
   const textWithoutSpecials = text.replace(/[^a-zA-Z0-9 ]/g, '');
   const words = textWithoutSpecials.split(' ');
 
-  return words.some((w) => terms.has(w.toLocaleLowerCase()));
+  return words.some((w) => terms.has(w.toLowerCase()));
 }
 
-export function start(text: string) {
-  const TERMS = new Map<string, TermData>([
-    ['lorem', { value: 'Lorem', len: 5, results: [] }],
-    ['amet', { value: 'amet', len: 4, results: [] }],
-    ['dui', { value: 'dui', len: 3, results: [] }],
-  ]);
+export function start(
+  sourceText: string,
+  termsList: string[]
+): CountingTermsResult {
+  const foundTermsMap: TermMap = new Map<string, TermResult[]>(
+    termsList.map((t) => [t, []])
+  );
 
-  const TEMPLATE_MAP = new Map<string, string>();
+  const templateDictionary = new Map<string, string>();
 
-  const TEXTBLOCK: string[] = [];
+  const paragraphBatches: string[] = [];
 
-  const paragraphs = text.split('\n');
+  const paragraphs = sourceText.split('\n');
 
   paragraphs
     .filter((para) => !!para)
     .forEach((paragraph, paIdx) => {
       const phrases = paragraph.split('.');
 
-      if (!hasAtLeatOneSearchedTerm(paragraph, TERMS)) {
-        TEXTBLOCK.push(paragraph);
+      if (!hasAtLeatOneSearchedTerm(paragraph, foundTermsMap)) {
+        paragraphBatches.push(paragraph);
         return;
       }
 
+      const phraseBatches: string[] = [];
       phrases
         .filter((phra) => !!phra)
         .forEach((phrase, phIdx) => {
-          if (!hasAtLeatOneSearchedTerm(phrase, TERMS)) {
-            TEXTBLOCK.push(phrase);
+          if (!hasAtLeatOneSearchedTerm(phrase, foundTermsMap)) {
+            phraseBatches.push(phrase);
             return;
           }
 
@@ -68,39 +55,31 @@ export function start(text: string) {
           let newPhrase = phrase;
 
           const foundWords = words.filter((w) =>
-            TERMS.has(w.toLocaleLowerCase())
+            foundTermsMap.has(w.toLowerCase())
           );
 
           foundWords.forEach((fw, id) => {
-            const lCaseWord = fw.toLocaleLowerCase();
-            const { results: curTermDataResults, ...curTermData } =
-              TERMS.get(lCaseWord)!;
-            TERMS.set(lCaseWord, {
-              ...curTermData,
-              results: [
-                ...curTermDataResults,
-                {
-                  value: fw,
-                  paragraphIndex: paIdx,
-                  phraseIndex: phIdx,
-                  posInPhrase: id,
-                },
-              ],
-            });
-            console.log({ fw });
+            const lCaseWord = fw.toLowerCase();
+            const results = foundTermsMap.get(lCaseWord)!;
+            const wId = `{{${paIdx}-${phIdx}-${id}}}`;
 
-            newPhrase = newPhrase.replace(fw, `{{${paIdx}-${phIdx}-${id}}}`);
-            TEMPLATE_MAP.set(`{{${paIdx}-${phIdx}-${id}}}`, fw);
-            TEXTBLOCK.push(newPhrase);
+            foundTermsMap.set(lCaseWord, [...results, { value: fw, id: wId }]);
+
+            newPhrase = newPhrase.replace(fw, wId);
+            templateDictionary.set(wId, fw);
+            phraseBatches.push(newPhrase);
           });
         });
+
+      const newParagraph = phraseBatches.join('.');
+      paragraphBatches.push(newParagraph);
     });
 
-  console.log(TEXTBLOCK.join());
+  const template = paragraphBatches.join('\n');
 
   return {
-    result: TERMS,
-    template: TEXTBLOCK,
-    templateMap: TEMPLATE_MAP,
+    foundTermsMap,
+    template,
+    templateDictionary,
   };
 }

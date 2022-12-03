@@ -1,5 +1,4 @@
 import { ChangeEvent, FormEvent, useContext, useState } from 'react';
-import { Plus } from 'phosphor-react';
 
 import { Term } from './Term';
 
@@ -7,8 +6,14 @@ import styles from './TermsList.module.css';
 import { TermContext } from '../context';
 
 export function TermsList() {
-  const { terms, addTerm, excludeTerm, highlightTerm, foundTermsMap } =
-    useContext(TermContext);
+  const {
+    terms,
+    addTerm,
+    excludeTerm,
+    highlightTerm,
+    foundTermsMap,
+    selectedTerm,
+  } = useContext(TermContext);
   const [inputValue, setInputValue] = useState('');
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -49,6 +54,7 @@ export function TermsList() {
             quantity={foundTermsMap.get(ft)!.length}
             onClick={handleTermClick}
             onExclude={handleOnExclude}
+            isSelected={ft === selectedTerm}
           />
         ))}
       </>
@@ -57,20 +63,16 @@ export function TermsList() {
 
   return (
     <div className={styles.termsList}>
-      <div className={styles.termsContainer}>
-        <form onSubmit={handleTermSubmit}>
-          <input
-            value={inputValue}
-            onChange={handleInputChange}
-            type="text"
-            placeholder="Insira um termo aqui"
-          />
-          <button type="submit">
-            <Plus size={20} weight="bold" />
-          </button>
-        </form>
-        <div className={styles.termsView}>{renderTerms()}</div>
-      </div>
+      <form onSubmit={handleTermSubmit}>
+        <input
+          value={inputValue}
+          onChange={handleInputChange}
+          type="text"
+          placeholder="Insira um termo aqui"
+        />
+      </form>
+
+      <div className={styles.termsView}>{renderTerms()}</div>
     </div>
   );
 }

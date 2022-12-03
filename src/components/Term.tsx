@@ -1,15 +1,22 @@
-import { Trash } from 'phosphor-react';
+import { X } from 'phosphor-react';
 
 import styles from './Term.module.css';
 
 interface TermProps {
   term: string;
+  isSelected?: boolean;
   quantity: number;
   onExclude: (v: string) => void;
   onClick: (v: string) => void;
 }
 
-export function Term({ term, onExclude, onClick, quantity }: TermProps) {
+export function Term({
+  term,
+  onExclude,
+  onClick,
+  quantity,
+  isSelected,
+}: TermProps) {
   function handleOnExclude() {
     onExclude(term);
   }
@@ -18,14 +25,16 @@ export function Term({ term, onExclude, onClick, quantity }: TermProps) {
     onClick(term);
   }
   return (
-    <a className={styles.term} onClick={handleOnClick}>
-      <a onClick={handleOnExclude}>
-        <Trash size={24} />
+    <div className={isSelected ? styles.selectedTerm : styles.term}>
+      <a className={styles.content} onClick={handleOnClick}>
+        <a className={styles.exclude} onClick={handleOnExclude}>
+          <X weight="bold" size={16} />
+        </a>
+
+        {term}
+
+        <text>{quantity}</text>
       </a>
-
-      {term}
-
-      <text>{quantity}</text>
-    </a>
+    </div>
   );
 }

@@ -3,8 +3,56 @@ import { useContext, useEffect, useState } from 'react';
 import { TEMPLATE_REGEX } from '../constants';
 import { TermContext } from '../context';
 
-function SelectedTermRender({ value }: { value: string }) {
-  return <strong>vasco</strong>;
+import styles from './ResultTable.module.css';
+
+function FoundTermRender({
+  value,
+  isSelected,
+}: {
+  value: string;
+  isSelected: boolean;
+}) {
+  return isSelected ? (
+    <strong className={styles.selectedTerm}>{value}</strong>
+  ) : (
+    <text>{value}</text>
+  );
+}
+
+function Paragraph() {
+  return (
+    <>
+      <br />
+      <br />
+    </>
+  );
+}
+
+function buildText(
+  template: string,
+  selectedTermsIds: string[],
+  templateDictionary: Map<string, string>
+): string {
+  let textValue = template;
+  const matches = [...textValue.matchAll(TEMPLATE_REGEX)];
+
+  if (!matches) {
+    return textValue;
+  }
+
+  matches.forEach((match) => {
+    const [key] = match;
+    const isSelected = selectedTermsIds.includes(key);
+
+    const newTextValue = textValue.replace(
+      key,
+      `<FoundTermRender value="${templateDictionary.get(
+        key
+      )}" isSelected={${isSelected}} />`
+    );
+    textValue = newTextValue;
+  });
+  return textValue;
 }
 
 export function ResultTable() {
@@ -14,33 +62,22 @@ export function ResultTable() {
   const [resultText, setResultText] = useState('');
 
   useEffect(() => {
-    console.log({ templateDictionary, selectedTermsIds });
-    if (!templateDictionary || !selectedTermsIds) return;
+    if (!templateDictionary || !selectedTermsIds || !template) return;
 
-    let textValue = template ?? '';
-    const matches = [...textValue.matchAll(TEMPLATE_REGEX)];
-    console.log(matches.length);
-
-    matches.forEach((match) => {
-      const [key] = match;
-      if (!selectedTermsIds.includes(key)) {
-        textValue = textValue.replace(key, templateDictionary.get(key)!);
-        setResultText(textValue);
-        return;
-      }
-      const newTextValue = textValue.replace(
-        key,
-        `<SelectedTermRender value="${templateDictionary.get(key)}" />`
-      );
-      setResultText(newTextValue);
-    });
-  }, [selectedTermsIds]);
+    const newTextValue = buildText(
+      template,
+      selectedTermsIds,
+      templateDictionary
+    );
+    setResultText(newTextValue);
+  }, [selectedTermsIds, templateDictionary, template]);
 
   return (
     <Markdown
       options={{
         overrides: {
-          SelectedTermRender,
+          FoundTermRender,
+          Paragraph,
         },
       }}
     >

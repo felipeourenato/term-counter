@@ -2,7 +2,6 @@
   height: calc(100vh - 60px);
   width: 100%;
   background: var(--gray-800);
-  /* border-radius: 8px; */
   padding: 1.5rem;
 
   display: flex;
@@ -10,20 +9,24 @@
   gap: 1.5rem;
 }
 
-.sourceContainer {
-  height: 100%;
-  border-top: 1px solid var(--gray-600);
-  padding-top: 1.5rem;
-}
-
-.sourceContainer form {
+.sourceText form {
   height: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-.sourceContainer form textarea {
+.sourceText form input {
+  width: 100%;
+  background: var(--gray-900);
+  border: 0;
+  border-radius: 8px;
+  padding: 0.875rem;
+  color: var(--gray-100);
+  line-height: 1.4;
+}
+
+.sourceText form textarea {
   height: 100%;
   border: 0;
   border-radius: 8px;
@@ -34,7 +37,8 @@
   line-height: 1.4;
 }
 
-.sourceContainer form button {
+.submitButton {
+  cursor: pointer;
   border: 0;
   border-radius: 8px;
   background: var(--green-500);
@@ -44,6 +48,47 @@
 
   transition: background-color 0.1s;
 }
-.sourceContainer form button:hover {
+
+.result {
+  height: 100%;
+  font-family: 'Courier Prime', 'Courier New', Courier, monospace !important;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.resultContent {
+  height: 100%;
+  overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.resultTitle {
+  font-weight: bold;
+  text-align: center;
+}
+
+.submitButton:hover {
   background: var(--green-300);
+}
+
+.editButton {
+  cursor: pointer;
+  border-radius: 8px;
+  background: var(--gray-800);
+  border: 1px solid var(--green-300);
+  color: var(--green-300);
+  font-weight: bold;
+  padding: 1rem 1.5rem;
+
+  transition: background-color 0.1s;
+}
+
+.editButton:hover {
+  background: var(--gray-700);
 }

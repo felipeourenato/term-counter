@@ -75,7 +75,7 @@ export function start(
       paragraphBatches.push(newParagraph);
     });
 
-  const template = paragraphBatches.join('\n');
+  const template = paragraphBatches.join('<Paragraph />');
 
   return {
     foundTermsMap,

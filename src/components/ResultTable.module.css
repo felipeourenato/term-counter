@@ -1,2 +1,8 @@
 .wrapper {
+  font-family: 'Courier Prime', 'Courier New', Courier, monospace !important;
+}
+
+.selectedTerm {
+  background-color: var(--green-500);
+  color: var(--white);
 }

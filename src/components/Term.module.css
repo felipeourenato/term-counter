@@ -1,16 +1,37 @@
-.term {
-  height: 48px;
-  padding: 0.725rem;
-  border: 1px solid var(--green-500);
-  border-radius: 8px;
-
+.content {
   display: flex;
-  align-items: center;
+  align-content: center;
   justify-content: space-between;
   gap: 0.875rem;
 }
 
-.term a {
+.term {
+  height: 36px;
+  padding: 0.725rem;
+  cursor: pointer;
+}
+
+.term:hover {
+  background: var(--gray-600);
+  color: var(--green-300);
+}
+
+.term:hover .exclude {
+  color: var(--green-300);
+}
+
+.selectedTerm {
+  height: 36px;
+  padding: 0.725rem;
+  background: var(--green-500);
+  color: var(--white) !important;
+}
+
+.selectedTerm .exclude {
+  color: var(--white);
+}
+
+.exclude {
   font-weight: bold;
   color: var(--gray-400);
   text-decoration: none;
@@ -19,6 +40,6 @@
   transition: color 0.1s;
 }
 
-.term a:hover {
-  color: var(--red-500);
+.exclude:hover {
+  color: var(--red-500) !important;
 }

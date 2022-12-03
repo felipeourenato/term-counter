@@ -1,4 +1,4 @@
-import { createContext, useState, ComponentProps, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { DEFAULT_TERMS, DEFAULT_TEXT } from './constants';
 import { CountingTermsResult, start, TermMap } from './logic';
 
@@ -7,6 +7,7 @@ interface ITermContext {
   templateDictionary?: Map<string, string>;
   foundTermsMap?: TermMap;
   terms?: string[];
+  selectedTerm?: string;
   selectedTermsIds?: string[];
   template?: string;
   highlightTerm: (value: string) => void;
@@ -15,12 +16,7 @@ interface ITermContext {
   excludeTerm: (value: string) => void;
 }
 
-export const TermContext = createContext<ITermContext>({
-  highlightTerm: (value: string) => {},
-  editSource: (value: string) => {},
-  addTerm: (value: string) => {},
-  excludeTerm: (value: string) => {},
-});
+export const TermContext = createContext<ITermContext>({} as ITermContext);
 
 export function TermContextProvider({ children }: { children: JSX.Element }) {
   const [selectedTermsIds, setSelectedTermsIds] = useState<string[]>([]);
@@ -56,6 +52,7 @@ export function TermContextProvider({ children }: { children: JSX.Element }) {
 
     if (!terms.includes(lowerCaseTerm)) return;
     const filteredList = terms.filter((t) => t !== lowerCaseTerm);
+
     setTerms([...filteredList]);
   };
 
@@ -85,6 +82,7 @@ export function TermContextProvider({ children }: { children: JSX.Element }) {
         editSource,
         addTerm,
         excludeTerm,
+        selectedTerm,
       }}
       children={children}
     />

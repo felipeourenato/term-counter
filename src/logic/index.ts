@@ -18,6 +18,10 @@ function hasAtLeatOneSearchedTerm(text: string, terms: TermMap): boolean {
   return words.some((w) => terms.has(w.toLowerCase()));
 }
 
+function log(value: any) {
+  console.log({ log: value });
+}
+
 export function start(
   sourceText: string,
   termsList: string[]
@@ -67,8 +71,8 @@ export function start(
 
             newPhrase = newPhrase.replace(fw, wId);
             templateDictionary.set(wId, fw);
-            phraseBatches.push(newPhrase);
           });
+          phraseBatches.push(newPhrase);
         });
 
       const newParagraph = phraseBatches.join('.');

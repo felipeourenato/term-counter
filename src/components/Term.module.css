@@ -1,4 +1,7 @@
 .content {
+  width: 100%;
+  line-height: 16px;
+
   display: flex;
   align-content: center;
   justify-content: space-between;
@@ -9,15 +12,17 @@
   height: 36px;
   padding: 0.725rem;
   cursor: pointer;
+  display: flex;
+  width: 100%;
 }
 
 .term:hover {
   background: var(--gray-600);
-  color: var(--green-300);
 }
 
-.term:hover .exclude {
-  color: var(--green-300);
+.termQuantity {
+  width: 48px;
+  text-align: center;
 }
 
 .selectedTerm {
@@ -25,14 +30,16 @@
   padding: 0.725rem;
   background: var(--green-500);
   color: var(--white) !important;
+  display: flex;
 }
 
-.selectedTerm .exclude {
+.selectedTerm .excludeButton {
   color: var(--white);
 }
 
-.exclude {
+.excludeButton {
   font-weight: bold;
+  margin-right: 1.5rem;
   color: var(--gray-400);
   text-decoration: none;
   cursor: pointer;
@@ -40,6 +47,6 @@
   transition: color 0.1s;
 }
 
-.exclude:hover {
+.excludeButton:hover {
   color: var(--red-500) !important;
 }

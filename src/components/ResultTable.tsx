@@ -13,9 +13,13 @@ function FoundTermRender({
   isSelected: boolean;
 }) {
   return isSelected ? (
-    <strong className={styles.selectedTerm}>{value}</strong>
+    <>
+      <strong className={styles.selectedTerm}>{value}</strong>&nbsp;
+    </>
   ) : (
-    <text>{value}</text>
+    <>
+      <text>{value}</text>&nbsp;
+    </>
   );
 }
 

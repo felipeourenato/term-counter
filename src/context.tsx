@@ -53,7 +53,9 @@ export function TermContextProvider({ children }: { children: JSX.Element }) {
     if (!terms.includes(lowerCaseTerm)) return;
     const filteredList = terms.filter((t) => t !== lowerCaseTerm);
 
+    setSelectedTerm(filteredList[0]);
     setTerms([...filteredList]);
+    // highlightTerm(filteredList[0]);
   };
 
   useEffect(() => {

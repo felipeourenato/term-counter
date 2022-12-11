@@ -1,9 +1,39 @@
-import { ChangeEvent, FormEvent, useContext, useState } from 'react';
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react';
 
 import { Term } from './Term';
 
 import styles from './TermsList.module.css';
 import { TermContext } from '../context';
+import { TermMap } from '../logic';
+
+function RenderTerms({
+  terms,
+  selectedTerm,
+  handleTermClick,
+  handleOnExclude,
+}: {
+  terms?: TermMap;
+  selectedTerm: string;
+  handleTermClick: (v: string) => void;
+  handleOnExclude: (v: string) => void;
+}) {
+  const foundTerms = terms ? [...terms?.keys()] : [];
+
+  return (
+    <>
+      {foundTerms.map((ft) => (
+        <Term
+          key={ft}
+          term={ft}
+          quantity={terms?.get(ft)!.length ?? 0}
+          onClick={handleTermClick}
+          onExclude={handleOnExclude}
+          isSelected={ft === selectedTerm}
+        />
+      ))}
+    </>
+  );
+}
 
 export function TermsList() {
   const {
@@ -15,6 +45,12 @@ export function TermsList() {
     selectedTerm,
   } = useContext(TermContext);
   const [inputValue, setInputValue] = useState('');
+  const [selected, setSelected] = useState<string>(selectedTerm || '');
+
+  useEffect(() => {
+    console.log(selectedTerm);
+    selectedTerm && setSelected(selectedTerm);
+  }, [selectedTerm]);
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value);
@@ -38,27 +74,8 @@ export function TermsList() {
   }
 
   function handleTermClick(term: string) {
+    console.log('selected?');
     highlightTerm(term);
-  }
-
-  function renderTerms() {
-    if (!foundTermsMap) return;
-    const foundTerms = [...foundTermsMap.keys()];
-
-    return (
-      <>
-        {foundTerms.map((ft) => (
-          <Term
-            key={ft}
-            term={ft}
-            quantity={foundTermsMap.get(ft)!.length}
-            onClick={handleTermClick}
-            onExclude={handleOnExclude}
-            isSelected={ft === selectedTerm}
-          />
-        ))}
-      </>
-    );
   }
 
   return (
@@ -72,7 +89,14 @@ export function TermsList() {
         />
       </form>
 
-      <div className={styles.termsView}>{renderTerms()}</div>
+      <div className={styles.termsView}>
+        <RenderTerms
+          terms={foundTermsMap}
+          selectedTerm={selected}
+          handleOnExclude={handleOnExclude}
+          handleTermClick={handleTermClick}
+        />
+      </div>
     </div>
   );
 }

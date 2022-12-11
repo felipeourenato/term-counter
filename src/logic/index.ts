@@ -56,9 +56,12 @@ export function start(
           }
 
           const words = phrase.split(' ');
+          const cleanedWords = words.map((w) =>
+            w.replace(/[^a-zA-Z0-9 ]/g, '')
+          );
           let newPhrase = phrase;
 
-          const foundWords = words.filter((w) =>
+          const foundWords = cleanedWords.filter((w) =>
             foundTermsMap.has(w.toLowerCase())
           );
 

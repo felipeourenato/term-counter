@@ -1,6 +1,8 @@
 .content {
   width: 100%;
+  height: 100%;
   line-height: 16px;
+  padding: 0.725rem;
 
   display: flex;
   align-content: center;
@@ -10,7 +12,6 @@
 
 .term {
   height: 36px;
-  padding: 0.725rem;
   cursor: pointer;
   display: flex;
   width: 100%;
@@ -27,7 +28,6 @@
 
 .selectedTerm {
   height: 36px;
-  padding: 0.725rem;
   background: var(--green-500);
   color: var(--white) !important;
   display: flex;
@@ -38,6 +38,7 @@
 }
 
 .excludeButton {
+  padding: 0.725rem;
   font-weight: bold;
   margin-right: 1.5rem;
   color: var(--gray-400);
